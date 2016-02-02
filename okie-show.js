@@ -15,10 +15,12 @@ var Slide = function (contentSource, index) {
     this.slideContent.removeAttribute('data-thumb');
     this.slideContent.removeAttribute('data-fullsize');
   }
+  helpers.addClass(this.slideContent, 'transition-opacity');
 
-  // this.loadingIndicator = document.createElement('i');
-  // this.loadingIndicator.classList.add('ion-load-c');
-  // this.element.appendChild(this.loadingIndicator);
+  this.loadingIndicator = document.createElement('i');
+  helpers.addClass(this.loadingIndicator, 'loading fa fa-spinner');
+  helpers.addClass(this.loadingIndicator, 'transition-opacity');
+  this.element.appendChild(this.loadingIndicator);
 
   this.element.appendChild(this.slideContent);
   contentSource.setAttribute('data-okie-slide-index', index);
@@ -33,16 +35,17 @@ Slide.prototype = {
   show: function() { 
     var el = this.element;
     this.element.classList.add('visible');
+    this.element.style.opacity = '1';
     if (this.slideContent.complete) {
-      el.style.opacity = '1';
+      this.element.style.opacity = '1';
     } else {
       this.slideContent.addEventListener('load', function(event) {
-        el.style.opacity = '1';
-        // el.classList.remove('loading');
+        this.loadingIndicator.style.display = 'none';
+        this.slideContent.style.opacity = '1';
         if (typeof dragLine !== 'undefined') {
-          dragLine(this);
+          dragLine(this.slideContent);
         } 
-      });
+      }.bind(this));
     }
   },
   hide: function() {
@@ -157,6 +160,7 @@ OkieShow.prototype = {
       // current slide, we can just fade it in can call it a day.
 
       var pattern = /(?:\s)(transition-\w+)/;
+
       var transitionClass = targetSlide.element.className.match(pattern)[1];
       transitionClass = transitionClass.replace(/\s|\b/g, '');
       // Not sure why regex is capturing the 'non-capturing' space,
@@ -170,7 +174,6 @@ OkieShow.prototype = {
       } catch(error) {
         console.log(error);
       }
-
       return;
     }
 
@@ -193,11 +196,6 @@ OkieShow.prototype = {
     // Slides will need to be absolutly positioned
     // so that they stack on top of eachother
 
-    targetSlide.element.classList.remove('transition');
-    // The targetSlide will not be visible until the currentSlide
-    // gets out of the way and only transitioning one element helps
-    // things run smoother and provides a better effect.
-
     targetSlide.show();
     currentSlide.hide();
     // Do the thing
@@ -208,7 +206,6 @@ OkieShow.prototype = {
       targetSlide.element.style.zIndex = '1';
       currentSlide.element.style.zIndex = '0';
       targetSlide.element.style.position = 'relative';
-      targetSlide.element.classList.add('transition');
 
       self.element.style.width = '';
       self.element.style.height = '';
@@ -218,8 +215,6 @@ OkieShow.prototype = {
     }, targetSlide.transDuration());
   },
   toSlide: function(slideIndex) {
-    var setStage = function() {
-    };
     this[this.animationType+'To'](slideIndex);
   },
   nextSlide: function() {
