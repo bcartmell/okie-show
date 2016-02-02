@@ -1,12 +1,18 @@
-var Slide = function (contentSource, index) {
+var Slide = function (content, index, options) {
   var self = this;
   this.element = document.createElement('li');
   this.index = index;
   this.element.classList.add('slide');
   this.element.classList.add('transition-opacity');
   this.element.classList.add('loading');
-  this.slideContent = contentSource.cloneNode(true);
 
+  this.slideContent = content;
+
+  // If the source content has the data-thumb flag set 
+  // and it includes a data-fullsize attribute, than we will
+  // use this information to load the fullsize image when we need it.
+  // this allows the orinal content to be a thumbnail while the slide
+  // hosts the full-size image, loaded only when and if it's needed.
   if (this.slideContent.hasAttribute('data-thumb') && 
       this.slideContent.getAttribute('data-fullsize')) {
     var imgSrc = this.slideContent.getAttribute('data-fullsize');
@@ -23,7 +29,6 @@ var Slide = function (contentSource, index) {
   this.element.appendChild(this.loadingIndicator);
 
   this.element.appendChild(this.slideContent);
-  contentSource.setAttribute('data-okie-slide-index', index);
 
   this.transDuration = function() {
     var duration = getComputedStyle(self.element).transitionDuration;
@@ -57,7 +62,7 @@ Slide.prototype = {
   },
 }
 
-var OkieShow = function(contentSource, options) {
+var OkieShow = function(options) {
   var self = this;
   options = options || {};
 
@@ -70,10 +75,6 @@ var OkieShow = function(contentSource, options) {
 
   this.animationType = options.animationType || 'fade';
 
-  this.contentSet = [].filter.call(contentSource.childNodes, function(node) {
-    return node instanceof Element;
-  });
-
   this.element = document.createElement('div');
   this.element.classList.add('okie-show');
   this.element.classList.add('transition-size');
@@ -83,9 +84,6 @@ var OkieShow = function(contentSource, options) {
   this.element.appendChild(this.slideContainer);
 
   this.slides = [];
-  [].forEach.call(this.contentSet, function(slideContent) { 
-    OkieShow.prototype.addSlide.call(self, slideContent);
-  });
 
   // add event targets
   this.prevButton = this.element.insertBefore(
@@ -136,8 +134,8 @@ OkieShow.prototype = {
   getCurrentIndex() {
     return this.getCurrentSlide().index;
   },
-  addSlide: function(contentSource) {
-    var newSlide = new Slide(contentSource, this.slides.length);
+  addSlide: function(content) {
+    var newSlide = new Slide(content, this.slides.length);
     this.slides.push(newSlide);
     this.slideContainer.appendChild(newSlide.element)
   },
