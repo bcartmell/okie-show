@@ -104,11 +104,6 @@ var OkieShow = function(contentSource, options) {
     self.prevSlide();
   }, false);
 
-  contentSource.addEventListener('click', function(event) {
-    var targetIndex = event.target.getAttribute('data-okie-slide-index');
-    self.toSlide(targetIndex);
-  }, false);
-
   this.allowNav = true;
   // We only want to allow one ongoing slide transition at time,
   // this.allowNav will be set to false during a slide transition
