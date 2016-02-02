@@ -12,6 +12,8 @@
 .okie-show .slide {
   max-height: inherit;
   max-width: 100%;
+  min-width: 19em;
+  min-height: 12em;
   overflow: hidden;
   text-align: center;
   text-indent: 0;
@@ -19,47 +21,15 @@
   position: relative;
   left: 0;
   display: none;
-  opacity: 0;
+  /* opacity: 0; */
 }
-/* 
-.okie-show .slide i {
-  display: none;
-}
- */
-/* 
-.okie-show i {
-  color: @light-gray;
-  position: absolute;
-    top: 15%;
-  font-size: 6em;
-  display: block;
-  padding: 0;
-  -webkit-animation-name: spin; 
-  -webkit-animation-duration: 1300ms;
-  -webkit-animation-iteration-count: infinite; 
-  -webkit-animation-timing-function: linear;
-  -moz-animation-name: spin; 
-  -moz-animation-duration: 1300ms;
-  -moz-animation-iteration-count: infinite; 
-  -moz-animation-timing-function: linear;
-  -ms-animation-name: spin; 
-  -ms-animation-duration: 1300ms;
-  -ms-animation-iteration-count: infinite; 
-  -ms-animation-timing-function: linear;
-  animation-name: spin; 
-  animation-duration: 1300ms;
-  animation-iteration-count: infinite; 
-  animation-timing-function: linear;
-  text-align: center;
-  width: 100%;
-}
- */
 .okie-show .slide.visible {
   display: inline-block;
 }
 .okie-show img {
   display: block;
   max-width: 100%;
+  opacity: 0;
 }
 .okie-show button {
   background: rgba(71, 71, 71, 0.3);
@@ -125,6 +95,7 @@ button::-moz-focus-inner {
 .okie-show .prev-button::before {
   right: -200%;
 }
+
 
 @media (max-width: 768px) {
   .okie-show button {
