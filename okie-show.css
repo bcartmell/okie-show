@@ -83,17 +83,17 @@ button::-moz-focus-inner {
   content: '';
   display: block;
   height: 100%;
-  width: 204%;
+  width: 104%;
   position: absolute;
   top: 0;
 }
 .okie-show .next-button:before,
 .okie-show .next-button::before {
-  left: -200%;
+  left: -100%;
 }
 .okie-show .prev-button:before,
 .okie-show .prev-button::before {
-  right: -200%;
+  right: -100%;
 }
 
 
