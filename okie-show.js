@@ -79,6 +79,7 @@ var OkieShow = (function() {
     }
 
     this.animationType = options.animationType || 'fade';
+    this.spinnerClass = options.spinnerClass || 'fa fa-spinner';
 
     this.element = document.createElement('div');
     this.element.classList.add('okie-show');
@@ -140,7 +141,9 @@ var OkieShow = (function() {
       return this.getCurrentSlide().index;
     },
     addSlide: function(content) {
-      var newSlide = new Slide(content, this.slides.length);
+      var newSlide = new Slide(content, this.slides.length, {
+        spinnerClass: this.spinnerClass
+      });
       this.slides.push(newSlide);
       this.slideContainer.appendChild(newSlide.element)
     },
