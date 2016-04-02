@@ -119,7 +119,7 @@ var OkieShow = function(options) {
         self.prevSlide();
         break;
     }
-  }, false);
+  }, true);
 
 };
 OkieShow.prototype = {
@@ -131,7 +131,7 @@ OkieShow.prototype = {
     }
     return undefined;
   },
-  getCurrentIndex() {
+  getCurrentIndex: function() {
     return this.getCurrentSlide().index;
   },
   addSlide: function(content) {
@@ -222,7 +222,7 @@ OkieShow.prototype = {
     if (targetIndex < 0) targetIndex = this.slides.length-1;
     this.toSlide(targetIndex);
   },
-  setMaxHeight(maxHeight) {
+  setMaxHeight: function(maxHeight) {
     this.element.style.maxHeight = maxHeight;
   },
 };
