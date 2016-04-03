@@ -8,12 +8,16 @@
 }
 .okie-show .slide-container {
   max-height: inherit;
+  padding: 0;
+  margin: 0;
 }
 .okie-show .slide {
   max-height: inherit;
   max-width: 100%;
   min-width: 19em;
   min-height: 12em;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   text-align: center;
   text-indent: 0;
