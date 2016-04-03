@@ -52,8 +52,8 @@ var OkieShow = (function() {
         this.slideContent.addEventListener('load', function(event) {
           this.loadingIndicator.style.display = 'none';
           this.slideContent.style.opacity = '1';
-          if (typeof dragLine !== 'undefined') {
-            dragLine(this.slideContent);
+          if (typeof OkieDrag !== 'undefined') {
+            OkieDrag(this.slideContent);
           } 
         }.bind(this));
       }
